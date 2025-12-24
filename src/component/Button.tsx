@@ -28,7 +28,7 @@ export const Button = ({
 
   return (
     <button
-      className={`${cn(baseClasses, variantClasses)} text-body-b w-full ${className}`}
+      className={`text-body-b ${cn(baseClasses, "w-full", variantClasses, className)}`}
       disabled={disabled}
       {...props}
     >
