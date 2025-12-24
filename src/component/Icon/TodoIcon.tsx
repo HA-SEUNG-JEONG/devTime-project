@@ -1,6 +1,6 @@
 import type { IconProps } from "./types";
 
-export const TodoIcon = ({ size = 48, className }: IconProps) => {
+const TodoIcon = ({ size = 48, className }: IconProps) => {
   return (
     <svg
       width={size}
@@ -20,3 +20,5 @@ export const TodoIcon = ({ size = 48, className }: IconProps) => {
     </svg>
   );
 };
+
+export default TodoIcon;
