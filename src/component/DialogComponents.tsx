@@ -9,8 +9,6 @@ import {
   DialogClose
 } from "@/components/ui/dialog";
 import { Button } from "./Button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 
 const DialogComponents = () => {
   return (
