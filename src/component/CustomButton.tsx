@@ -7,6 +7,7 @@ export interface ButtonProps {
   variant: "primary" | "secondary" | "tertiary";
   disabled?: boolean;
   className?: string;
+  fullWidth?: boolean;
 }
 
 /** Primary UI component for user interaction */
@@ -15,6 +16,7 @@ export const CustomButton = ({
   variant = "primary",
   disabled = false,
   className,
+  fullWidth = false,
   ...props
 }: ButtonProps) => {
   const baseClasses = "px-4 py-3 rounded-[5px]";
@@ -46,7 +48,7 @@ export const CustomButton = ({
       className={cn(
         "typography-body-b",
         baseClasses,
-        "w-full",
+        fullWidth && "w-full",
         variantClasses,
         className,
       )}
