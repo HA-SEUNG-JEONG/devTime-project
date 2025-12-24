@@ -227,145 +227,145 @@
 }
 
 @layer utilities {
-  .text-heading-b {
+  .typography-heading-b {
     font-size: 1.5rem;
     font-weight: 700;
     line-height: 1.875rem;
   }
 
-  .text-heading-s {
+  .typography-heading-s {
     font-size: 1.5rem;
     font-weight: 600;
     line-height: 1.875rem;
   }
 
-  .text-heading-m {
+  .typography-heading-m {
     font-size: 1.5rem;
     font-weight: 500;
     line-height: 1.875rem;
   }
 
-  .text-heading-r {
+  .typography-heading-r {
     font-size: 1.5rem;
     font-weight: 400;
     line-height: 1.875rem;
   }
 
-  .text-title-b {
+  .typography-title-b {
     font-size: 1.25rem;
     font-weight: 700;
     line-height: 1.5rem;
   }
 
-  .text-title-s {
+  .typography-title-s {
     font-size: 1.25rem;
     font-weight: 600;
     line-height: 1.5rem;
   }
 
-  .text-title-m {
+  .typography-title-m {
     font-size: 1.25rem;
     font-weight: 500;
     line-height: 1.5rem;
   }
 
-  .text-title-r {
+  .typography-title-r {
     font-size: 1.25rem;
     font-weight: 400;
     line-height: 1.5rem;
   }
 
-  .text-subtitle-b {
+  .typography-subtitle-b {
     font-size: 1.125rem;
     font-weight: 700;
     line-height: 1.375rem;
   }
 
-  .text-subtitle-s {
+  .typography-subtitle-s {
     font-size: 1.125rem;
     font-weight: 600;
     line-height: 1.375rem;
   }
 
-  .text-subtitle-m {
+  .typography-subtitle-m {
     font-size: 1.125rem;
     font-weight: 500;
     line-height: 1.375rem;
   }
 
-  .text-subtitle-r {
+  .typography-subtitle-r {
     font-size: 1.125rem;
     font-weight: 400;
     line-height: 1.375rem;
   }
 
-  .text-body-b {
+  .typography-body-b {
     font-size: 1rem;
     font-weight: 700;
     line-height: 1.125rem;
   }
 
-  .text-body-s {
+  .typography-body-s {
     font-size: 1rem;
     font-weight: 600;
     line-height: 1.125rem;
   }
 
-  .text-body-m {
+  .typography-body-m {
     font-size: 1rem;
     font-weight: 500;
     line-height: 1.125rem;
   }
 
-  .text-body-r {
+  .typography-body-r {
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.125rem;
   }
 
-  .text-caption-b {
+  .typography-caption-b {
     font-size: 0.75rem;
     font-weight: 700;
     line-height: 1rem;
   }
 
-  .text-caption-s {
+  .typography-caption-s {
     font-size: 0.75rem;
     font-weight: 600;
     line-height: 1rem;
   }
 
-  .text-caption-m {
+  .typography-caption-m {
     font-size: 0.75rem;
     font-weight: 500;
     line-height: 1rem;
   }
 
-  .text-caption-r {
+  .typography-caption-r {
     font-size: 0.75rem;
     font-weight: 400;
     line-height: 1rem;
   }
 
-  .text-label-b {
+  .typography-label-b {
     font-size: 0.625rem;
     font-weight: 700;
     line-height: 0.75rem;
   }
 
-  .text-label-s {
+  .typography-label-s {
     font-size: 0.625rem;
     font-weight: 600;
     line-height: 0.75rem;
   }
 
-  .text-label-m {
+  .typography-label-m {
     font-size: 0.625rem;
     font-weight: 500;
     line-height: 0.75rem;
   }
 
-  .text-label-r {
+  .typography-label-r {
     font-size: 0.625rem;
     font-weight: 400;
     line-height: 0.75rem;
