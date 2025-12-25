@@ -31,27 +31,15 @@ export const CustomButton = ({
 
   return (
     <Button
-      variant={
-        variant as
-          | "primary"
-          | "secondary"
-          | "tertiary"
-          | "link"
-          | "default"
-          | "destructive"
-          | "outline"
-          | "ghost"
-          | null
-          | undefined
-      }
+      variant={variant}
       disabled={disabled}
-      className={cn(
-        "typography-body-b",
+      className={`typography-body-b ${cn(
+
         baseClasses,
         fullWidth && "w-full",
         variantClasses,
         className,
-      )}
+      )}`}
       {...props}
     >
       {label}
