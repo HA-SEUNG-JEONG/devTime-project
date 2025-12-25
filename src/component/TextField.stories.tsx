@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import TextBox from "./TextField";
+import TextField from "./TextField";
 
 const meta = {
   title: "Component/TextBox",
-  component: TextBox,
+  component: TextField,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof TextBox>;
+} satisfies Meta<typeof TextField>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -20,13 +20,13 @@ export const Basic = {
     function Basic() {
       const [value, setValue] = useState("");
       return (
-        <TextBox value={value}>
-          <TextBox.Input
+        <TextField value={value}>
+          <TextField.Input
             placeholder="Placeholder"
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
-        </TextBox>
+        </TextField>
       );
     }
     return <Basic />;
@@ -40,14 +40,14 @@ export const WithLabel = {
 
       const [value, setValue] = useState("");
       return (
-        <TextBox value={value}>
-          <TextBox.Label>Field Label</TextBox.Label>
-          <TextBox.Input
+        <TextField value={value}>
+          <TextField.Label>Field Label</TextField.Label>
+          <TextField.Input
             placeholder="Placeholder"
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
-        </TextBox>
+        </TextField>
       );
     }
     return <WithLabel />;
@@ -60,14 +60,14 @@ export const WithHelperText = {
     function HelperText() {
     const [value, setValue] = useState("");
     return (
-      <TextBox value={value}>
-        <TextBox.Input
+      <TextField value={value}>
+        <TextField.Input
           placeholder="Placeholder"
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
-        <TextBox.HelperText>Helper Text</TextBox.HelperText>
-      </TextBox>
+        <TextField.HelperText>Helper Text</TextField.HelperText>
+      </TextField>
     );
     }
     return <HelperText />;
@@ -82,44 +82,44 @@ export const WithHelperTextVariants = {
       const [value, setValue] = useState("");
       return (
         <div className="flex flex-col gap-4">
-          <TextBox value={value}>
-            <TextBox.Input
+          <TextField value={value}>
+            <TextField.Input
               placeholder="Placeholder"
               value={value}
               onChange={(e) => setValue(e.target.value)}
             />
-            <TextBox.HelperText variant="default">
+            <TextField.HelperText variant="default">
               Default helper text
-            </TextBox.HelperText>
-          </TextBox>
-          <TextBox value={value}>
-            <TextBox.Input
+            </TextField.HelperText>
+                </TextField>
+          <TextField value={value}>
+            <TextField.Input
               placeholder="Placeholder"
               value={value}
               onChange={(e) => setValue(e.target.value)}
             />
-            <TextBox.HelperText variant="success">
+            <TextField.HelperText variant="success">
               Success message
-            </TextBox.HelperText>
-          </TextBox>
-          <TextBox value={value}>
-            <TextBox.Input
+            </TextField.HelperText>
+          </TextField>
+          <TextField value={value}>
+            <TextField.Input
               placeholder="Placeholder"
               value={value}
               onChange={(e) => setValue(e.target.value)}
             />
-            <TextBox.HelperText variant="error">Error message</TextBox.HelperText>
-          </TextBox>
-          <TextBox value={value}>
-            <TextBox.Input
+            <TextField.HelperText variant="error">Error message</TextField.HelperText>
+          </TextField>
+          <TextField value={value}>
+            <TextField.Input
               placeholder="Placeholder"
               value={value}
               onChange={(e) => setValue(e.target.value)}
             />
-            <TextBox.HelperText variant="warning">
+            <TextField.HelperText variant="warning">
               Warning message
-            </TextBox.HelperText>
-          </TextBox>
+            </TextField.HelperText>
+          </TextField>
         </div>
       );
     }
@@ -134,23 +134,25 @@ export const WithLabelAndHelper = {
 
       const [value, setValue] = useState("");
       return (
-        <TextBox value={value}>
-          <TextBox.Label>Field Label</TextBox.Label>
+        <TextField value={value}>
+          <TextField.Label>Field Label</TextField.Label>
           <div className="flex">
-            <TextBox.Input
+            <TextField.Input
               placeholder="Placeholder"
               value={value}
               onChange={(e) => setValue(e.target.value)}
+              className="h-11"
             />
-            <TextBox.Button
+            <TextField.Button
               type="external"
               onClick={() => console.log("추가 버튼 클릭")}
+              className="h-11"
             >
               Button
-            </TextBox.Button>
+            </TextField.Button>
           </div>
-          <TextBox.HelperText>Helper Text</TextBox.HelperText>
-        </TextBox>
+          <TextField.HelperText>Helper Text</TextField.HelperText>
+        </TextField>
       );
     }
     return <WithLabelAndHelper />;
@@ -163,26 +165,26 @@ export const WithInlineButton = {
     function WithInlineButton() {
     const [value, setValue] = useState("");
     return (
-      <TextBox value={value} className="relative ">
-        <TextBox.Label>Field Label</TextBox.Label>
+      <TextField value={value} className="relative ">
+        <TextField.Label>Field Label</TextField.Label>
        <div className="flex items-center">
-          <TextBox.Input
+          <TextField.Input
             hasButton
             placeholder="Placeholder"
             value={value}
             onChange={(e) => setValue(e.target.value)}
             className="h-14"
           />
-          <TextBox.Button
+          <TextField.Button
             type="inline"
             onClick={() => console.log("추가 버튼 클릭")}
             className="absolute right-6"
           >
             추가
-          </TextBox.Button>
+          </TextField.Button>
        </div>
-        <TextBox.HelperText>Helper Text</TextBox.HelperText>
-      </TextBox>
+        <TextField.HelperText>Helper Text</TextField.HelperText>
+      </TextField>
     );
     }
     return <WithInlineButton />;
@@ -195,23 +197,23 @@ export const WithoutLabelAndHelper = {
     function WithoutLabelAndHelper() {
       const [value, setValue] = useState("");
       return (
-        <TextBox value={value}>
+        <TextField value={value}>
           <div className="flex items-center">
-            <TextBox.Input
+            <TextField.Input
               placeholder="Placeholder"
               value={value}
               onChange={(e) => setValue(e.target.value)}
               className="h-11"
             />
-            <TextBox.Button
+            <TextField.Button
               type="external"
               onClick={() => console.log("추가 버튼 클릭")}
               className="h-11"
             >
               Button
-            </TextBox.Button>
+            </TextField.Button>
           </div>
-        </TextBox>
+        </TextField>
       );
     }
     return <WithoutLabelAndHelper />;
