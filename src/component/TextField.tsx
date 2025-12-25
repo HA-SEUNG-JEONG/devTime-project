@@ -1,4 +1,4 @@
-import * as React from "react";
+
 import { cn } from "@/lib/utils";
 import {
   InputGroup,
@@ -6,6 +6,7 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { CustomButton } from "./CustomButton";
+import { createContext, useContext, useMemo } from "react";
 
 interface TextFieldContextValue {
   id: string;
@@ -13,14 +14,14 @@ interface TextFieldContextValue {
   defaultValue?: string;
 }
 
-const TextFieldContext = React.createContext<TextFieldContextValue | null>(
+const TextFieldContext = createContext<TextFieldContextValue | null>(
   null,
 );
 
 const useTextFieldContext = () => {
-  const context = React.useContext(TextFieldContext);
+  const context = useContext(TextFieldContext);
   if (!context) {
-    throw new Error("TextField subcomponents must be used within TextBox");
+    throw new Error("TextField subcomponents must be used within TextField");
   }
   return context;
 };
@@ -40,14 +41,14 @@ const TextField = ({
   className,
   children,
 }: TextFieldProps) => {
-  const contextValue = React.useMemo(
+  const contextValue = useMemo(
     () => ({ id, value, defaultValue }),
     [id, value, defaultValue],
   );
 
   return (
     <TextFieldContext.Provider value={contextValue}>
-      <div className={cn("flex flex-col gap-1", className)}>{children}</div>
+      <div className={cn("flex flex-col gap-2", className)}>{children}</div>
     </TextFieldContext.Provider>
   );
 };
@@ -63,7 +64,7 @@ const TextFieldLabel = ({ className, children }: TextFieldLabelProps) => {
   return (
     <label
       htmlFor={id}
-      className={cn("typography-body-m text-gray-700", className)}
+      className={`typography-body-m ${cn("text-gray-700", className)}`}
     >
       {children}
     </label>
@@ -91,7 +92,7 @@ const TextFieldInput = ({
         <InputGroupInput
           type="text"
           id={id}
-          className={cn("text-border-300 typography-body-m", className)}
+          className={`text-border-300 typography-body-m ${cn(className)}`}
           {...props}
         />
       </InputGroup>
@@ -140,7 +141,7 @@ const TextFieldButton = ({
         disabled={disabled}
         className={cn(
           "typography-caption-m",
-          inputValue && inputValue.trim() ? "text-primary-0" : "text-disabled",
+          !inputValue?.trim() ? "text-disabled" : "text-primary-0",
           className,
         )}
       >
