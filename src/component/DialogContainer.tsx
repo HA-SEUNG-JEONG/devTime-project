@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { CustomButton } from "./CustomButton";
 
-const DialogComponents = () => {
+const DialogContainer = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -40,4 +40,4 @@ const DialogComponents = () => {
   );
 };
 
-export default DialogComponents;
+export default DialogContainer;

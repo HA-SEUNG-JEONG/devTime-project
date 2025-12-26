@@ -1,16 +1,16 @@
 import type { Meta } from "@storybook/react-vite";
-import DialogComponents from "./DialogComponents";
+import DialogContainer from "./DialogContainer";
 import type { StoryObj } from "@storybook/react-vite";
 
 const meta = {
   title: "Component/Dialog",
-  component: DialogComponents,
+  component: DialogContainer,
   tags: ["autodocs"],
-} satisfies Meta<typeof DialogComponents>;
+} satisfies Meta<typeof DialogContainer>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
-  render: () => <DialogComponents />,
+  render: () => <DialogContainer />,
 };
