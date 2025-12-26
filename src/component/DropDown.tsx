@@ -77,7 +77,7 @@ const DropDown = ({
                   {item.label}
                 </span>
               </DropdownMenuItem>
-              {index < items.length - 1 && <DropdownMenuSeparator />}
+              {index < items.length - 1 && <DropdownMenuSeparator className="mx-3"/>}
             </div>
           ))}
         </DropdownMenuContent>

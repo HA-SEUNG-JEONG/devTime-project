@@ -45,7 +45,7 @@ const defaultItems = [
 ];
 
 const manyItems = [
-  {id: 1, label: "First Item"}    ,
+  {id: 1, label: "First Item"},
   {id: 2, label: "Second Item"},
   {id: 3, label: "Third Item"},
   {id: 4, label: "Fourth Item"},
