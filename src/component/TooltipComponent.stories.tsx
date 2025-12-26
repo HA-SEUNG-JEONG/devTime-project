@@ -20,6 +20,7 @@ export const DefaultSideBottom: Story = {
     children: "Hover",
     side: "bottom",
     delayDuration: 0,
+    sideOffset: 8,
   },
 };
 
