@@ -7,11 +7,11 @@ import { Button } from "./Button";
 
 const TooltipComponent = () => {
   return (
-    <Tooltip>
+    <Tooltip delayDuration={0}>
       <TooltipTrigger>
         <Button label="Hover" variant="primary" />
       </TooltipTrigger>
-      <TooltipContent>Hover</TooltipContent>
+      <TooltipContent side="bottom">Hover</TooltipContent>
     </Tooltip>
   );
 };
