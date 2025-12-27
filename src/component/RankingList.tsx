@@ -21,11 +21,11 @@ const RankingList = ({
   subtitle,
   avatarUrl,
   stats,
-  items = ["Item", "Item", "Item", "Item", "Item"]
+  items = ["Item", "Item", "Item", "Item", "Item"],
 }: RankingCardProps) => {
   const getRankBadgeColor = (rank: number) => {
-    if (rank === 1) return "bg-[#4F6EF7] text-white";
-    if (rank <= 10) return "bg-[#8FA3F9] text-white";
+    if (rank === 1) return "bg-primary-0 text-white";
+    if (rank <= 10) return "bg-primary-10 text-white";
     return "bg-muted text-muted-foreground";
   };
 
@@ -36,8 +36,8 @@ const RankingList = ({
         <div className="shrink-0">
           <div
             className={`${getRankBadgeColor(
-              rank
-            )} rounded-xl px-4 py-2 text-lg font-bold mb-4 inline-block`}
+              rank,
+            )} mb-4 inline-block rounded-xl px-4 py-2 text-lg font-bold`}
           >
             {rank.toLocaleString("ko-KR")}위
           </div>
@@ -45,9 +45,11 @@ const RankingList = ({
             <AvatarImage src={avatarUrl} alt={username} />
             <AvatarFallback className="bg-[#D5DBEC]">
               <svg
-                className="h-16 w-16 text-muted-foreground"
+                className="text-muted-foreground h-16 w-16"
                 fill="currentColor"
                 viewBox="0 0 24 24"
+                role="img"
+                aria-label="Profile Image"
               >
                 <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
               </svg>
@@ -57,35 +59,35 @@ const RankingList = ({
 
         {/* Content */}
         <div className="flex-1">
-          <h3 className="text-2xl font-bold text-foreground mb-1">
+          <h3 className="text-foreground mb-1 text-2xl font-bold">
             {username}
           </h3>
-          <p className="text-[#4F6EF7] text-base mb-4">{subtitle}</p>
+          <p className="mb-4 text-base text-[#4F6EF7]">{subtitle}</p>
 
           {/* Stats */}
-          <div className="flex gap-6 text-sm text-muted-foreground mb-4">
+          <div className="text-muted-foreground mb-4 flex gap-6 text-sm">
             <span>
               누적{" "}
-              <span className="font-bold text-foreground">
+              <span className="text-foreground font-bold">
                 {stats.totalHours}시간
               </span>
             </span>
             <span>
               일 평균{" "}
-              <span className="font-bold text-foreground">
+              <span className="text-foreground font-bold">
                 {stats.dailyAverage}시간
               </span>
             </span>
             <span>
               경력{" "}
-              <span className="font-bold text-foreground">
+              <span className="text-foreground font-bold">
                 {stats.experience}
               </span>
             </span>
           </div>
 
           {/* Items */}
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex flex-wrap gap-2">
             {items.map((item, index) => (
               <Button
                 key={index}
