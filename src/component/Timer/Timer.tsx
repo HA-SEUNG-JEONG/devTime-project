@@ -1,4 +1,4 @@
-import ColonIcon from "../Icon/ColonIcon";
+import ColonIcon from "@/components/Icon/ColonIcon";
 import "./styles.css";
 
 interface TimerProps {

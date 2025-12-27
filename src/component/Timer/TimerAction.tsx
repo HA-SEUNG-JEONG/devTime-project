@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import FinishIcon from "../Icon/FinishIcon";
-import PauseIcon from "../Icon/PauseIcon";
-import ResetIcon from "../Icon/ResetIcon";
-import StartIcon from "../Icon/StartIcon";
-import TodoIcon from "../Icon/TodoIcon";
+import FinishIcon from "@/components/Icon/FinishIcon";
+import PauseIcon from "@/components/Icon/PauseIcon";
+import ResetIcon from "@/components/Icon/ResetIcon";
+import StartIcon from "@/components/Icon/StartIcon";
+import TodoIcon from "@/components/Icon/TodoIcon";
 
 interface TimerActionProps {
   variant: "ready" | "in-progress" | "paused";
