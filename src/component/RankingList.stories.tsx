@@ -3,12 +3,12 @@ import RankingList from "./RankingList";
 import ProfileImage from "@/assets/profileImage.png";
 
 const meta = {
-  title: "Components/RankingCard",
+  title: "Components/RankingList",
   component: RankingList,
   parameters: {
-    layout: "padded"
+    layout: "padded",
   },
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 } satisfies Meta<typeof RankingList>;
 
 export default meta;
@@ -23,10 +23,10 @@ export const FirstPlace: Story = {
     stats: {
       totalHours: 420,
       dailyAverage: 4.5,
-      experience: "4 - 7년"
+      experience: "4 - 7년",
     },
-    items: ["Item", "Item", "Item", "Item", "Item"]
-  }
+    items: ["Item", "Item", "Item", "Item", "Item"],
+  },
 };
 
 export const FourthPlace: Story = {
@@ -38,10 +38,10 @@ export const FourthPlace: Story = {
     stats: {
       totalHours: 420,
       dailyAverage: 4.5,
-      experience: "1 - 3년"
+      experience: "1 - 3년",
     },
-    items: ["Item", "Item", "Item", "Item", "Item"]
-  }
+    items: ["Item", "Item", "Item", "Item", "Item"],
+  },
 };
 
 export const OutOfTopRanks: Story = {
@@ -53,10 +53,10 @@ export const OutOfTopRanks: Story = {
     stats: {
       totalHours: 420,
       dailyAverage: 4.5,
-      experience: "11년 이상"
+      experience: "11년 이상",
     },
-    items: ["Item", "Item", "Item", "Item", "Item"]
-  }
+    items: ["Item", "Item", "Item", "Item", "Item"],
+  },
 };
 
 export const SecondPlace: Story = {
@@ -68,10 +68,10 @@ export const SecondPlace: Story = {
     stats: {
       totalHours: 380,
       dailyAverage: 4.2,
-      experience: "5 - 8년"
+      experience: "5 - 8년",
     },
-    items: ["React", "TypeScript", "Next.js", "Tailwind"]
-  }
+    items: ["React", "TypeScript", "Next.js", "Tailwind"],
+  },
 };
 
 export const ThirdPlace: Story = {
@@ -83,10 +83,10 @@ export const ThirdPlace: Story = {
     stats: {
       totalHours: 350,
       dailyAverage: 3.8,
-      experience: "3 - 5년"
+      experience: "3 - 5년",
     },
-    items: ["Figma", "CSS", "Animation", "UX"]
-  }
+    items: ["Figma", "CSS", "Animation", "UX"],
+  },
 };
 
 export const LongUsername: Story = {
@@ -98,10 +98,10 @@ export const LongUsername: Story = {
     stats: {
       totalHours: 120,
       dailyAverage: 2.1,
-      experience: "1년 미만"
+      experience: "1년 미만",
     },
-    items: ["HTML", "CSS", "JavaScript"]
-  }
+    items: ["HTML", "CSS", "JavaScript"],
+  },
 };
 
 export const NoAvatar: Story = {
@@ -112,8 +112,8 @@ export const NoAvatar: Story = {
     stats: {
       totalHours: 200,
       dailyAverage: 3.0,
-      experience: "2 - 4년"
+      experience: "2 - 4년",
     },
-    items: ["Python", "Django", "PostgreSQL"]
-  }
+    items: ["Python", "Django", "PostgreSQL"],
+  },
 };
