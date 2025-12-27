@@ -7,8 +7,6 @@ interface TimerProps {
   seconds: number;
 }
 
-// background: linear-gradient(135deg, rgba(76, 121, 255, 0) 0%, rgba(76, 121, 255, 0.2) 100%);
-
 const Timer = ({ hours, minutes, seconds }: TimerProps) => {
   return (
     <div className="flex items-center justify-center gap-2">
