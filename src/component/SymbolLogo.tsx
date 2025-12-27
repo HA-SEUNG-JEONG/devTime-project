@@ -1,4 +1,3 @@
-import React from "react";
 import type { IconProps } from "./Icon/types";
 
 const SymbolLogo = ({ size = 42, className }: IconProps) => {
@@ -10,6 +9,7 @@ const SymbolLogo = ({ size = 42, className }: IconProps) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      aria-label="심볼 로고"
     >
       <g clipPath="url(#clip0_40000429_8915)">
         <path
