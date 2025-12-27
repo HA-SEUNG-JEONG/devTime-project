@@ -9,10 +9,7 @@ interface TodoItemProps {
   backgroundColor?: string;
   textColor?: string;
   checked?: boolean;
-
   isEditing?: boolean;
-
-  noIcon?: boolean;
 }
 
 const TodoItem = ({
@@ -20,22 +17,21 @@ const TodoItem = ({
   textColor,
   checked,
   isEditing,
-  noIcon
 }: TodoItemProps) => {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
     <div
-      className={`p-6 flex items-center justify-between rounded-md  ${
+      className={`flex items-center justify-between rounded-md p-6 ${
         isChecked ? "bg-gray-400" : backgroundColor
       }`}
     >
       <SymbolLogo className="mr-4" />
-      <span className={`inline-flex flex-1 typography-body-s ${textColor}`}>
+      <span className={`typography-body-s inline-flex flex-1 ${textColor}`}>
         TODO ITEM
       </span>
 
-      {!isEditing && !checked && !noIcon && (
+      {!isEditing && !checked && (
         <Checkbox
           checked={isChecked}
           onCheckedChange={() => setIsChecked(!isChecked)}
@@ -50,7 +46,6 @@ const TodoItem = ({
           <TrashIcon className="text-white" />
         </div>
       )}
-      {noIcon && <div className="flex items-center gap-4"></div>}
     </div>
   );
 };
