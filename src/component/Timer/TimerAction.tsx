@@ -29,10 +29,6 @@ const TimerAction = ({
     currentVariant === "paused" || currentVariant === "ready";
   const isOtherIconsDisabled = currentVariant === "ready";
 
-  const getIconClassName = (iconDisabled: boolean) => {
-    return iconDisabled || disabled ? "text-primary-10" : "text-primary-0";
-  };
-
   const getIconDisabled = (iconDisabled: boolean) => {
     return iconDisabled || disabled;
   };
@@ -52,7 +48,7 @@ const TimerAction = ({
     }
   };
 
-  const checkCurrentVariant = (variant: "ready" | "in-progress" | "paused") => {
+  const getIconClassName = (variant: "ready" | "in-progress" | "paused") => {
     return variant === "ready" ? "text-gray-400" : "text-primary-0";
   };
 
@@ -73,9 +69,11 @@ const TimerAction = ({
           disabled={getIconDisabled(
             currentVariant === "paused" || currentVariant === "ready",
           )}
-          className={getIconClassName(
-            currentVariant === "paused" || currentVariant === "ready",
-          )}
+          className={
+            currentVariant === "paused" || currentVariant === "ready"
+              ? "text-gray-400"
+              : "text-primary-0"
+          }
         />
         <FinishIcon
           onClick={() => handleIconClick("finish")}
@@ -88,11 +86,11 @@ const TimerAction = ({
       <div className="flex gap-6">
         <TodoIcon
           disabled={currentVariant === "ready"}
-          className={checkCurrentVariant(currentVariant)}
+          className={getIconClassName(currentVariant)}
         />
         <ResetIcon
           disabled={currentVariant === "ready"}
-          className={checkCurrentVariant(currentVariant)}
+          className={getIconClassName(currentVariant)}
         />
       </div>
     </div>
