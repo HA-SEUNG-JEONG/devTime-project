@@ -4,7 +4,7 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { CustomButton } from "./Button/CustomButton";
+import { CustomButton } from "../Button/CustomButton";
 import { createContext, useContext, useMemo } from "react";
 
 interface TextFieldContextValue {
@@ -89,7 +89,7 @@ const TextFieldInput = ({
         <InputGroupInput
           type="text"
           id={id}
-          className={`text-border-300 typography-body-m ${cn(className)}`}
+          className={`typography-body-m text-gray-300 ${cn(className)}`}
           {...props}
         />
       </InputGroup>
@@ -138,7 +138,7 @@ const TextFieldButton = ({
         disabled={disabled}
         className={cn(
           "typography-caption-m",
-          !inputValue?.trim() ? "text-disabled" : "text-primary-0",
+          !inputValue?.trim() ? "text-gray-400" : "text-primary-0",
           className,
         )}
       >

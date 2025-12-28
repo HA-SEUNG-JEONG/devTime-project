@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import FinishIcon from "../../components/Icon/FinishIcon";
-import PauseIcon from "../../components/Icon/PauseIcon";
-import ResetIcon from "../Icon/ResetIcon";
-import StartIcon from "../../components/Icon/StartIcon";
-import TodoIcon from "../Icon/TodoIcon";
+import FinishIcon from "@/components/Icon/FinishIcon";
+import PauseIcon from "@/components/Icon/PauseIcon";
+import ResetIcon from "@/components/Icon/ResetIcon";
+import StartIcon from "@/components/Icon/StartIcon";
+import TodoIcon from "@/components/Icon/TodoIcon";
 
 interface TimerActionProps {
   variant: "ready" | "in-progress" | "paused";
@@ -29,10 +29,6 @@ const TimerAction = ({
     currentVariant === "paused" || currentVariant === "ready";
   const isOtherIconsDisabled = currentVariant === "ready";
 
-  const getIconClassName = (iconDisabled: boolean) => {
-    return iconDisabled || disabled ? "text-primary-10" : "text-primary-0";
-  };
-
   const getIconDisabled = (iconDisabled: boolean) => {
     return iconDisabled || disabled;
   };
@@ -52,7 +48,7 @@ const TimerAction = ({
     }
   };
 
-  const checkCurrentVariant = (variant: "ready" | "in-progress" | "paused") => {
+  const getIconClassName = (variant: "ready" | "in-progress" | "paused") => {
     return variant === "ready" ? "text-gray-400" : "text-primary-0";
   };
 
@@ -61,28 +57,40 @@ const TimerAction = ({
       <div className="flex gap-[80px]">
         <StartIcon
           onClick={() => handleIconClick("start")}
-          disabled={getIconDisabled(isStartIconDisabled)}
-          className={getIconClassName(isStartIconDisabled)}
+          disabled={getIconDisabled(currentVariant === "in-progress")}
+          className={
+            currentVariant === "in-progress"
+              ? "text-gray-400"
+              : "text-primary-0"
+          }
         />
         <PauseIcon
           onClick={() => handleIconClick("pause")}
-          disabled={getIconDisabled(isPauseIconDisabled)}
-          className={getIconClassName(isPauseIconDisabled)}
+          disabled={getIconDisabled(
+            currentVariant === "paused" || currentVariant === "ready",
+          )}
+          className={
+            currentVariant === "paused" || currentVariant === "ready"
+              ? "text-gray-400"
+              : "text-primary-0"
+          }
         />
         <FinishIcon
           onClick={() => handleIconClick("finish")}
-          disabled={getIconDisabled(isOtherIconsDisabled)}
-          className={getIconClassName(isOtherIconsDisabled)}
+          disabled={getIconDisabled(currentVariant === "ready")}
+          className={
+            currentVariant === "ready" ? "text-gray-400" : "text-primary-0"
+          }
         />
       </div>
       <div className="flex gap-6">
         <TodoIcon
           disabled={currentVariant === "ready"}
-          className={checkCurrentVariant(currentVariant)}
+          className={getIconClassName(currentVariant)}
         />
         <ResetIcon
           disabled={currentVariant === "ready"}
-          className={checkCurrentVariant(currentVariant)}
+          className={getIconClassName(currentVariant)}
         />
       </div>
     </div>

@@ -5,9 +5,9 @@ const meta = {
   title: "Design System/Color",
   component: Color,
   parameters: {
-    layout: "fullscreen"
+    layout: "fullscreen",
   },
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 } satisfies Meta<typeof Color>;
 
 export default meta;
@@ -25,83 +25,83 @@ const grayColorMap: Record<string, string> = {
   "500": "#6B7280",
   "600": "#4B5563",
   "700": "#374151",
-  "800": "#1f2937"
+  "800": "#1f2937",
 };
 
 export const PrimaryColors: Story = {
   render: () => (
     <div className="p-8">
-      <h2 className="text-2xl font-bold mb-4">Primary Colors</h2>
+      <h2 className="mb-4 text-2xl font-bold">Primary Colors</h2>
       <div className="grid grid-cols-5 gap-4">
         <div>
-          <div className="w-24 h-24 rounded-lg bg-primary-0" />
+          <div className="bg-primary-0 h-24 w-24 rounded-lg" />
           <p className="mt-2 text-sm font-medium">Primary Color</p>
           <p className="text-xs text-gray-500">#4C79FF</p>
         </div>
         <div>
-          <div className="w-24 h-24 rounded-lg bg-primary-10" />
+          <div className="bg-primary-10 h-24 w-24 rounded-lg" />
           <p className="mt-2 text-sm font-medium">10%</p>
           <p className="text-xs text-gray-500">#4C79FF</p>
         </div>
         <div>
-          <div className="w-24 h-24 rounded-lg bg-primary-30" />
+          <div className="bg-primary-30 h-24 w-24 rounded-lg" />
           <p className="mt-2 text-sm font-medium">30%</p>
           <p className="text-xs text-gray-500">#4C79FF</p>
         </div>
         <div>
-          <div className="w-24 h-24 rounded-lg bg-linear-to-br from-primary-0 to-secondary-indigo" />
+          <div className="from-primary-0 to-secondary-indigo h-24 w-24 rounded-lg bg-linear-to-br" />
           <p className="mt-2 text-sm font-medium">Gradient</p>
           <p className="text-xs text-gray-500">#4C79FF→#023E99</p>
         </div>
       </div>
     </div>
-  )
+  ),
 };
 
 export const SecondaryColors: Story = {
   render: () => (
     <div className="p-8">
-      <h2 className="text-2xl font-bold mb-4">Secondary Colors</h2>
+      <h2 className="mb-4 text-2xl font-bold">Secondary Colors</h2>
       <div className="grid grid-cols-6 gap-4">
         <div>
-          <div className="w-20 h-20 rounded-lg bg-secondary-indigo" />
+          <div className="bg-secondary-indigo h-20 w-20 rounded-lg" />
           <p className="mt-2 text-xs font-medium">Indigo</p>
           <p className="text-xs text-gray-500">#023E99</p>
         </div>
         <div>
-          <div className="w-20 h-20 rounded-lg bg-secondary-informative" />
+          <div className="bg-secondary-informative h-20 w-20 rounded-lg" />
           <p className="mt-2 text-xs font-medium">Informative</p>
           <p className="text-xs text-gray-500">#2683E8</p>
         </div>
         <div>
-          <div className="w-20 h-20 rounded-lg bg-secondary-negative" />
+          <div className="bg-secondary-negative h-20 w-20 rounded-lg" />
           <p className="mt-2 text-xs font-medium">Negative</p>
           <p className="text-xs text-gray-500">#DC2626</p>
         </div>
         <div>
-          <div className="w-20 h-20 rounded-lg bg-secondary-notice" />
+          <div className="bg-secondary-notice h-20 w-20 rounded-lg" />
           <p className="mt-2 text-xs font-medium">Notice</p>
           <p className="text-xs text-gray-500">#FBB724</p>
         </div>
         <div>
-          <div className="w-20 h-20 rounded-lg bg-secondary-positive" />
+          <div className="bg-secondary-positive h-20 w-20 rounded-lg" />
           <p className="mt-2 text-xs font-medium">Positive</p>
           <p className="text-xs text-gray-500">#22C55E</p>
         </div>
         <div>
-          <div className="w-20 h-20 rounded-lg bg-secondary-fuchsia" />
+          <div className="bg-secondary-fuchsia h-20 w-20 rounded-lg" />
           <p className="mt-2 text-xs font-medium">Fuchsia</p>
           <p className="text-xs text-gray-500">#FD28EC</p>
         </div>
       </div>
     </div>
-  )
+  ),
 };
 
 export const GrayScale: Story = {
   render: () => (
     <div className="p-8">
-      <h2 className="text-2xl font-bold mb-4">Gray Scale</h2>
+      <h2 className="mb-4 text-2xl font-bold">Gray Scale</h2>
       <div className="grid grid-cols-10 gap-2">
         {[
           { label: "White", value: "#FFFFFF" },
@@ -113,11 +113,11 @@ export const GrayScale: Story = {
           { label: "500", value: "#6B7280" },
           { label: "600", value: "#4B5563" },
           { label: "700", value: "#374151" },
-          { label: "800", value: "#1f2937" }
+          { label: "800", value: "#1f2937" },
         ].map((color) => (
           <div key={color.label}>
             <div
-              className={`w-16 h-16 rounded-lg border ${
+              className={`h-16 w-16 rounded-lg border ${
                 grayColorMap[color.label]
               }`}
             />
@@ -127,35 +127,35 @@ export const GrayScale: Story = {
         ))}
       </div>
     </div>
-  )
+  ),
 };
 
 export const StateColors: Story = {
   render: () => (
     <div className="p-8">
-      <h2 className="text-2xl font-bold mb-4">State Colors</h2>
+      <h2 className="mb-4 text-2xl font-bold">State Colors</h2>
       <div className="grid grid-cols-5 gap-4">
         <div>
-          <div className="w-24 h-24 rounded-lg bg-disabled disabled:bg-disabled" />
+          <div className="h-24 w-24 rounded-lg bg-gray-400 disabled:bg-gray-400" />
           <p className="mt-2 text-sm font-medium">Disabled</p>
           <p className="text-xs text-gray-500">#968DA8</p>
         </div>
         <div>
-          <div className="w-24 h-24 rounded-lg bg-primary-0 hover:bg-hover" />
+          <div className="bg-primary-0 hover:bg-hover h-24 w-24 rounded-lg" />
           <p className="mt-2 text-sm font-medium">Hover (B10%)</p>
           <p className="text-xs text-gray-500">#4C79FF</p>
         </div>
         <div>
-          <div className="w-24 h-24 rounded-lg bg-primary-0 active:bg-active" />
+          <div className="bg-primary-0 active:bg-active h-24 w-24 rounded-lg" />
           <p className="mt-2 text-sm font-medium">Active B10%</p>
           <p className="text-xs text-gray-500">#4C79FF</p>
         </div>
         <div>
-          <div className="w-24 h-24 rounded-lg bg-primary-0 focus:bg-focus" />
+          <div className="bg-primary-0 focus:bg-focus h-24 w-24 rounded-lg" />
           <p className="mt-2 text-sm font-medium">Focus</p>
           <p className="text-xs text-gray-500">#4C79FF</p>
         </div>
       </div>
     </div>
-  )
+  ),
 };
