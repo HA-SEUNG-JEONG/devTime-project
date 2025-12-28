@@ -89,7 +89,7 @@ const TextFieldInput = ({
         <InputGroupInput
           type="text"
           id={id}
-          className={`text-border-300 typography-body-m ${cn(className)}`}
+          className={`typography-body-m text-gray-300 ${cn(className)}`}
           {...props}
         />
       </InputGroup>
