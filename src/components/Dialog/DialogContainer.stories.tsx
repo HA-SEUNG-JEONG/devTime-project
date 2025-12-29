@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { CustomDialog } from "./CustomDialog";
+import { CustomButton } from "../Button/CustomButton";
 import TextField from "../Text/TextField";
 
 const meta = {
@@ -15,9 +16,11 @@ export const Alert: Story = {
   render: () => (
     <CustomDialog>
       <CustomDialog.Trigger>
-        <button className="typography-body-b bg-secondary-negative cursor-pointer rounded-[5px] px-4 py-3 text-white">
-          Alert 다이얼로그 열기
-        </button>
+        <CustomButton
+          label="Alert 다이얼로그 열기"
+          variant="primary"
+          className="bg-secondary-negative hover:bg-secondary-negative/90"
+        />
       </CustomDialog.Trigger>
       <CustomDialog.Content>
         <CustomDialog.Header>
@@ -38,9 +41,7 @@ export const Confirm: Story = {
   render: () => (
     <CustomDialog>
       <CustomDialog.Trigger>
-        <button className="typography-body-b bg-primary-0 cursor-pointer rounded-[5px] px-4 py-3 text-white">
-          Confirm 다이얼로그 열기
-        </button>
+        <CustomButton label="Confirm 다이얼로그 열기" variant="primary" />
       </CustomDialog.Trigger>
       <CustomDialog.Content>
         <CustomDialog.Header>
@@ -62,9 +63,11 @@ export const Danger: Story = {
   render: () => (
     <CustomDialog>
       <CustomDialog.Trigger>
-        <button className="typography-body-b bg-secondary-negative cursor-pointer rounded-[5px] px-4 py-3 text-white">
-          계정 삭제
-        </button>
+        <CustomButton
+          label="계정 삭제"
+          variant="primary"
+          className="bg-secondary-negative hover:bg-secondary-negative/90"
+        />
       </CustomDialog.Trigger>
       <CustomDialog.Content>
         <CustomDialog.Header>
@@ -88,9 +91,7 @@ export const WithForm: Story = {
   render: () => (
     <CustomDialog>
       <CustomDialog.Trigger>
-        <button className="typography-body-b bg-primary-0 cursor-pointer rounded-[5px] px-4 py-3 text-white">
-          닉네임 변경
-        </button>
+        <CustomButton label="닉네임 변경" variant="primary" />
       </CustomDialog.Trigger>
       <CustomDialog.Content>
         <CustomDialog.Header>
@@ -118,9 +119,7 @@ export const WithCloseButton: Story = {
   render: () => (
     <CustomDialog>
       <CustomDialog.Trigger>
-        <button className="typography-body-b bg-primary-0 cursor-pointer rounded-[5px] px-4 py-3 text-white">
-          다이얼로그 열기
-        </button>
+        <CustomButton label="다이얼로그 열기" variant="primary" />
       </CustomDialog.Trigger>
       <CustomDialog.Content showCloseButton>
         <CustomDialog.Header>
