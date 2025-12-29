@@ -146,9 +146,7 @@ const SignIn = () => {
               })}
               ref={(e) => {
                 register("email").ref(e);
-                (
-                  emailInputRef as React.MutableRefObject<HTMLInputElement | null>
-                ).current = e;
+                emailInputRef.current = e;
               }}
             />
             {errors.email && (

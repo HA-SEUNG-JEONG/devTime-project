@@ -24,9 +24,9 @@ const DUPLICATE_CHECK_CONFIG = {
   fields: ["email", "nickname"] as DuplicateCheckField[],
   endpoints: {
     email: (value: string) =>
-      `${import.meta.env.VITE_API_URL}/api/signup/check-email?email=${value}`,
+      `${import.meta.env.VITE_API_URL}/api/signup/check-email?email=${encodeURIComponent(value)}`,
     nickname: (value: string) =>
-      `${import.meta.env.VITE_API_URL}/api/signup/check-nickname?nickname=${value}`,
+      `${import.meta.env.VITE_API_URL}/api/signup/check-nickname?nickname=${encodeURIComponent(value)}`,
   },
   validators: {
     email: (value: string) => Boolean(value && EMAIL_REGEX.test(value)),
@@ -115,11 +115,21 @@ const SignUp = () => {
       reset();
       navigate("/signin", { replace: true });
     } catch (error) {
+      let errorMessage = "회원가입에 실패했습니다.";
+
+      if (axios.isAxiosError(error) && error.response?.data) {
+        errorMessage =
+          error.response.data.message ||
+          error.response.data.error?.message ||
+          errorMessage;
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
       setErrorModal({
         open: true,
         title: "회원가입 실패",
-        description:
-          error instanceof Error ? error.message : "회원가입에 실패했습니다.",
+        description: errorMessage,
       });
     }
   };
@@ -281,6 +291,7 @@ const SignUp = () => {
                 validate: (value) =>
                   value === watch("password") ||
                   "비밀번호가 일치하지 않습니다.",
+                deps: ["password"],
               })}
             />
             {errors.confirmPassword && (

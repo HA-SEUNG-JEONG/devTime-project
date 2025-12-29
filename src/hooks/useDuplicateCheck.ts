@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 
 interface HelperText {
   message: string;
@@ -36,6 +36,11 @@ export function useDuplicateCheck(config: DuplicateCheckConfig) {
     createInitialStates(fields),
   );
 
+  const fieldStatesRef = useRef(fieldStates);
+  useEffect(() => {
+    fieldStatesRef.current = fieldStates;
+  }, [fieldStates]);
+
   const updateField = useCallback(
     (field: string, updates: Partial<FieldState>) => {
       setFieldStates((prev) => ({
@@ -59,7 +64,16 @@ export function useDuplicateCheck(config: DuplicateCheckConfig) {
         const response = await fetch(endpoints[field](value), {
           method: "GET",
         });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error: ${response.status}`);
+        }
+
         const data = await response.json();
+
+        if (typeof data.available !== "boolean") {
+          throw new Error("Invalid response format");
+        }
 
         updateField(field, {
           isChecked: data.available,
@@ -94,30 +108,32 @@ export function useDuplicateCheck(config: DuplicateCheckConfig) {
   const handleFieldBlur = useCallback(
     (field: string, value: string) => {
       const isValid = validators[field](value);
-      const isNotChecked = !fieldStates[field].isChecked;
+      const isNotChecked = !fieldStatesRef.current[field].isChecked;
 
       if (isValid && isNotChecked) {
         updateField(field, { isTouched: true });
       }
     },
-    [validators, fieldStates, updateField],
+    [validators, updateField],
   );
 
   const showCheckWarning = useCallback(
     (field: string, value: string, hasError: boolean) => {
-      const { isTouched, isChecked } = fieldStates[field];
+      const { isTouched, isChecked } = fieldStatesRef.current[field];
       const isValid = validators[field](value);
 
       return isTouched && isValid && !isChecked && !hasError;
     },
-    [fieldStates, validators],
+    [validators],
   );
 
   const isAllChecked = useCallback(
     (targetFields: string[]) => {
-      return targetFields.every((field) => fieldStates[field].isChecked);
+      return targetFields.every(
+        (field) => fieldStatesRef.current[field].isChecked,
+      );
     },
-    [fieldStates],
+    [],
   );
 
   return {

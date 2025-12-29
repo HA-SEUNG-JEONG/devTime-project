@@ -1,24 +1,50 @@
 const ACCESS_TOKEN_KEY = "accessToken";
 const REFRESH_TOKEN_KEY = "refreshToken";
 
-export const tokenStorage = {
-  getAccessToken: () => localStorage.getItem(ACCESS_TOKEN_KEY),
+function getItem(key: string): string | null {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
 
-  getRefreshToken: () => localStorage.getItem(REFRESH_TOKEN_KEY),
+function setItem(key: string, value: string): boolean {
+  try {
+    localStorage.setItem(key, value);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function removeItem(key: string): boolean {
+  try {
+    localStorage.removeItem(key);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export const tokenStorage = {
+  getAccessToken: () => getItem(ACCESS_TOKEN_KEY),
+
+  getRefreshToken: () => getItem(REFRESH_TOKEN_KEY),
 
   setTokens: (accessToken: string, refreshToken: string) => {
-    localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-    localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
+    setItem(ACCESS_TOKEN_KEY, accessToken);
+    setItem(REFRESH_TOKEN_KEY, refreshToken);
   },
 
   setAccessToken: (accessToken: string) => {
-    localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+    setItem(ACCESS_TOKEN_KEY, accessToken);
   },
 
   clearTokens: () => {
-    localStorage.removeItem(ACCESS_TOKEN_KEY);
-    localStorage.removeItem(REFRESH_TOKEN_KEY);
+    removeItem(ACCESS_TOKEN_KEY);
+    removeItem(REFRESH_TOKEN_KEY);
   },
 
-  isLoggedIn: () => !!localStorage.getItem(ACCESS_TOKEN_KEY),
+  isLoggedIn: () => !!getItem(ACCESS_TOKEN_KEY),
 };
