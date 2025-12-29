@@ -5,7 +5,7 @@ import App from "./App.tsx";
 import { BrowserRouter, Route, Routes } from "react-router";
 import SignUp from "./page/User/SignUp.tsx";
 import SignIn from "./page/User/SignIn.tsx";
-import { ProtectedRoute, GuestRoute } from "./ProtectedRoute.tsx";
+import { GuestRoute } from "./ProtectedRoute.tsx";
 import { AuthProvider } from "./contexts/AuthContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
@@ -13,14 +13,7 @@ createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <App />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/" element={<App />} />
           <Route
             path="/signup"
             element={
