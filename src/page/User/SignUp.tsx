@@ -5,7 +5,7 @@ import { CustomButton } from "@/components/Button/CustomButton";
 import { Link, useNavigate } from "react-router";
 import VerticalLogo from "@/components/Icon/VerticalLogo";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ErrorModal } from "@/components/ErrorModal";
+import { useErrorModal } from "@/contexts/ErrorModalContext";
 import { EMAIL_REGEX, PASSWORD_REGEX } from "./constant";
 import axios from "axios";
 import type { SignupResponse } from "@/types/api";
@@ -58,16 +58,7 @@ const SignUp = () => {
   } = useDuplicateCheck(DUPLICATE_CHECK_CONFIG);
 
   const [isTermsAgreed, setIsTermsAgreed] = useState(false);
-
-  const [errorModal, setErrorModal] = useState<{
-    open: boolean;
-    title: string;
-    description: string;
-  }>({
-    open: false,
-    title: "",
-    description: "",
-  });
+  const { showError } = useErrorModal();
 
   const isEmailValid = DUPLICATE_CHECK_CONFIG.validators.email(watchedEmail);
   const isNicknameValid =
@@ -86,8 +77,7 @@ const SignUp = () => {
 
   const onSubmit = async (data: SignUpFormData) => {
     if (!isAllChecked(["email", "nickname"])) {
-      setErrorModal({
-        open: true,
+      showError({
         title: "회원가입 실패",
         description: "이메일과 닉네임 중복 확인을 완료해 주세요.",
       });
@@ -95,8 +85,7 @@ const SignUp = () => {
     }
 
     if (!isTermsAgreed) {
-      setErrorModal({
-        open: true,
+      showError({
         title: "회원가입 실패",
         description: "이용약관에 동의해 주세요.",
       });
@@ -126,16 +115,11 @@ const SignUp = () => {
         errorMessage = error.message;
       }
 
-      setErrorModal({
-        open: true,
+      showError({
         title: "회원가입 실패",
         description: errorMessage,
       });
     }
-  };
-
-  const handleCloseModal = () => {
-    setErrorModal({ open: false, title: "", description: "" });
   };
 
   return (
@@ -372,12 +356,6 @@ const SignUp = () => {
         </form>
       </div>
 
-      <ErrorModal
-        open={errorModal.open}
-        title={errorModal.title}
-        description={errorModal.description}
-        onOpenChange={handleCloseModal}
-      />
     </div>
   );
 };

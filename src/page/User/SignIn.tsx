@@ -1,12 +1,12 @@
 import { CustomButton } from "@/components/Button/CustomButton";
 import { CustomDialog } from "@/components/Dialog/CustomDialog";
-import { ErrorModal } from "@/components/ErrorModal";
 import SymbolLogo from "@/components/SymbolLogo";
 import TextField from "@/components/Text/TextField";
 import { useAuth } from "@/contexts/AuthContext";
+import { useErrorModal } from "@/contexts/ErrorModalContext";
 
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { EMAIL_REGEX, PASSWORD_REGEX } from "./constant";
@@ -26,17 +26,7 @@ const SignIn = () => {
   } = useForm<LoginFormData>({ mode: "onChange" });
   const navigate = useNavigate();
   const { login } = useAuth();
-  const emailInputRef = useRef<HTMLInputElement>(null);
-
-  const [errorModal, setErrorModal] = useState<{
-    open: boolean;
-    title: string;
-    description: string;
-  }>({
-    open: false,
-    title: "",
-    description: "",
-  });
+  const { showError } = useErrorModal();
 
   const [duplicateLoginModal, setDuplicateLoginModal] = useState<{
     open: boolean;
@@ -92,17 +82,11 @@ const SignIn = () => {
         errorMessage = error.message;
       }
 
-      setErrorModal({
-        open: true,
+      showError({
         title: "로그인 실패",
         description: errorMessage,
       });
     }
-  };
-
-  const handleCloseModal = () => {
-    setErrorModal({ open: false, title: "", description: "" });
-    emailInputRef.current?.focus();
   };
 
   const handleCloseDuplicateLoginModal = () => {
@@ -117,7 +101,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="relative flex min-h-screen w-full items-center justify-center overflow-hidden lg:justify-end">
+    <div className="relative flex min-h-screen w-full items-center justify-center overflow-hidden">
       {/* 배경 로고 - 태블릿 이상에서만 표시 */}
       <SymbolLogo
         className="text-primary-0 absolute top-[60px] -right-[100px] hidden md:-right-[150px] md:block lg:-right-[213px]"
@@ -127,10 +111,10 @@ const SignIn = () => {
 
       {/* 로그인 폼 */}
       <form
-        className="z-10 w-full px-4 sm:px-6 md:px-8 lg:absolute lg:left-[50%] lg:w-[50%] lg:px-0"
+        className="z-10 w-full max-w-[400px] px-4 sm:px-6"
         onSubmit={handleSubmit(handleLogin)}
       >
-        <div className="mx-auto flex w-full max-w-[400px] flex-col gap-4 rounded-[10px] bg-white/80 p-6 shadow-[0_40px_100px_rgba(0,0,0,0.25)] backdrop-blur-[50px] lg:translate-x-[-50%]">
+        <div className="flex w-full flex-col gap-4 rounded-[10px] bg-white/80 p-6 shadow-[0_40px_100px_rgba(0,0,0,0.25)] backdrop-blur-[50px]">
           <h1 className="typography-heading-b text-primary-0">로그인</h1>
           <TextField>
             <TextField.Label className="text-left">이메일</TextField.Label>
@@ -144,10 +128,6 @@ const SignIn = () => {
                   message: "이메일 형식으로 작성해 주세요.",
                 },
               })}
-              ref={(e) => {
-                register("email").ref(e);
-                emailInputRef.current = e;
-              }}
             />
             {errors.email && (
               <TextField.HelperText variant="error" className="text-left">
@@ -198,13 +178,6 @@ const SignIn = () => {
           </div>
         </div>
       </form>
-
-      <ErrorModal
-        open={errorModal.open}
-        title={errorModal.title}
-        description={errorModal.description}
-        onOpenChange={handleCloseModal}
-      />
 
       <CustomDialog
         open={duplicateLoginModal.open}
