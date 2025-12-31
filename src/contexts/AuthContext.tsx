@@ -7,7 +7,6 @@ import {
 } from "react";
 import { tokenStorage } from "@/utils/token";
 import axios from "axios";
-import { useErrorModal } from "./ErrorModalContext";
 
 interface AuthContextValue {
   isLoggedIn: boolean;
@@ -31,7 +30,6 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState(() => tokenStorage.isLoggedIn());
-  const { showError } = useErrorModal();
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -62,11 +60,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         );
       }
     } catch (error) {
-      showError({
-        title: "로그아웃 실패",
-        description:
-          error instanceof Error ? error.message : "로그아웃에 실패했습니다.",
-      });
+      console.log(error ?? "로그아웃에 실패했습니다.");
     } finally {
       tokenStorage.clearTokens();
       setIsLoggedIn(false);
