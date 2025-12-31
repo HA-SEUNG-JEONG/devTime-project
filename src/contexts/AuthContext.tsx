@@ -1,10 +1,17 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { tokenStorage } from "@/utils/token";
+import axios from "axios";
 
 interface AuthContextValue {
   isLoggedIn: boolean;
   login: (accessToken: string, refreshToken: string) => void;
-  logout: () => void;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -38,10 +45,27 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setIsLoggedIn(true);
   };
 
-  const logout = () => {
-    tokenStorage.clearTokens();
-    setIsLoggedIn(false);
-  };
+  const logout = useCallback(async () => {
+    try {
+      const accessToken = tokenStorage.getAccessToken();
+      if (accessToken) {
+        await axios.post(
+          `${import.meta.env.VITE_API_URL}/api/auth/logout`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          },
+        );
+      }
+    } catch (error) {
+      console.log(error ?? "로그아웃에 실패했습니다.");
+    } finally {
+      tokenStorage.clearTokens();
+      setIsLoggedIn(false);
+    }
+  }, []);
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
