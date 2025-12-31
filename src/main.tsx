@@ -15,23 +15,23 @@ createRoot(document.getElementById("root")!).render(
       <AuthProvider>
         <ErrorModalProvider>
           <Routes>
-          <Route path="/" element={<App />} />
-          <Route
-            path="/signup"
-            element={
-              <GuestRoute>
-                <SignUp />
-              </GuestRoute>
-            }
-          />
-          <Route
-            path="/signin"
-            element={
-              <GuestRoute>
-                <SignIn />
-              </GuestRoute>
-            }
-          />
+            <Route path="/" element={<App />} />
+            <Route
+              path="/signup"
+              element={
+                <GuestRoute>
+                  <SignUp />
+                </GuestRoute>
+              }
+            />
+            <Route
+              path="/signin"
+              element={
+                <GuestRoute>
+                  <SignIn />
+                </GuestRoute>
+              }
+            />
           </Routes>
         </ErrorModalProvider>
       </AuthProvider>
