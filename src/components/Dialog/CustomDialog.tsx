@@ -164,7 +164,7 @@ interface CustomDialogBodyProps {
 }
 
 const CustomDialogBody = ({ children, className }: CustomDialogBodyProps) => {
-  return <div className={cn("py-4", className)}>{children}</div>;
+  return <div className={cn(className)}>{children}</div>;
 };
 
 // Footer
