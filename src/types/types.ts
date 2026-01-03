@@ -385,6 +385,13 @@ export interface DeleteStudyLogResponse {
   message: string;
 }
 
+export interface PullingTimerResponse {
+  message?: string;
+  startTime: string;
+  splitTimes: SplitTime[];
+  lastUpdateTime: string;
+}
+
 // ============================================
 // Tech Stacks API Types
 // ============================================
