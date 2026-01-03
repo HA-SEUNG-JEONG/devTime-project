@@ -17,9 +17,11 @@ function App() {
     minutes,
     seconds,
     isLoading,
+    error,
     startTimer,
     pauseTimer,
     resumeTimer,
+    clearError,
   } = useTimer();
 
   const handleStartClick = () => {
@@ -31,10 +33,20 @@ function App() {
       await startTimer(todayGoal, tasks);
       setShowStartDialog(false);
     } catch {
+      const errorTitle =
+        error?.type === "conflict"
+          ? "이미 실행 중인 타이머가 있습니다"
+          : "타이머 시작에 실패했습니다";
+      const errorDescription =
+        error?.type === "conflict"
+          ? "기존 타이머를 종료한 후 다시 시도해주세요."
+          : error?.message ?? "다시 시도해주세요.";
+
       showError({
-        title: "타이머 시작에 실패했습니다.",
-        description: "다시 시도해주세요.",
+        title: errorTitle,
+        description: errorDescription,
       });
+      clearError();
     }
   };
 

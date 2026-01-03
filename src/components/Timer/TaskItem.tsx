@@ -115,15 +115,14 @@ const TaskItem = ({
           >
             <TrashIcon className="text-white" size={20} />
           </button>
-          {!task.isCompleted && (
+          {task.isCompleted ? (
+            <CheckIcon className="text-white" size={20} />
+          ) : (
             <Checkbox
               checked={task.isCompleted}
               onCheckedChange={() => onToggleComplete(task.id)}
-              className="border-white data-[state=checked]:bg-white data-[state=checked]:text-primary-0"
+              className="data-[state=checked]:text-primary-0 border-white data-[state=checked]:bg-white"
             />
-          )}
-          {task.isCompleted && (
-            <CheckIcon className="text-white" size={20} />
           )}
         </div>
       )}

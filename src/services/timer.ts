@@ -3,6 +3,7 @@ import type {
   StartTimerRequest,
   StartTimerResponse,
   GetActiveTimerResponse,
+  GetStudyLogDetailResponse,
 } from "@/types/api";
 
 export const timerService = {
@@ -11,7 +12,6 @@ export const timerService = {
       "/api/timers",
       data,
     );
-    console.log(response, "timer service");
     return response.data;
   },
 
@@ -19,6 +19,24 @@ export const timerService = {
     try {
       const response =
         await apiClient.get<GetActiveTimerResponse>("/api/timers");
+      return response.data;
+    } catch (error) {
+      if (
+        (error as { response?: { status: number } }).response?.status === 404
+      ) {
+        return null;
+      }
+      throw error;
+    }
+  },
+
+  getStudyLogDetail: async (
+    studyLogId: string,
+  ): Promise<GetStudyLogDetailResponse | null> => {
+    try {
+      const response = await apiClient.get<GetStudyLogDetailResponse>(
+        `/api/study-logs/${studyLogId}`,
+      );
       return response.data;
     } catch (error) {
       if (

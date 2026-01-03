@@ -227,7 +227,7 @@ const ConfirmButton = ({
 }: ConfirmButtonProps) => {
   const dangerClassName =
     variant === "danger"
-      ? "bg-secondary-negative hover:bg-secondary-negative/90"
+      ? "bg-secondary-negative hover:bg-secondary-negative/90 py-3 px-4"
       : "";
 
   return (

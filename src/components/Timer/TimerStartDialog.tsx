@@ -30,7 +30,7 @@ const TimerStartDialog = ({
     `task-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
 
   const handleAddTask = useCallback(() => {
-    const trimmed = todayGoal.trim();
+    const trimmed = newTaskContent.trim();
     if (!trimmed || trimmed.length > 30) return;
 
     const newTask: Task = {
@@ -42,7 +42,7 @@ const TimerStartDialog = ({
     setTasks((prev) => [...prev, newTask]);
     // setTodayGoal("");
     setNewTaskContent("");
-  }, [todayGoal]);
+  }, [newTaskContent]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.nativeEvent.isComposing) {
@@ -70,10 +70,10 @@ const TimerStartDialog = ({
   }, []);
 
   const handleStart = () => {
-    if (tasks.length === 0) return;
+    const trimmedGoal = todayGoal.trim();
+    if (!trimmedGoal || tasks.length === 0) return;
     const taskContents = tasks.map((t) => t.content);
-    const goal = tasks[0].content;
-    onStart(goal, taskContents);
+    onStart(trimmedGoal, taskContents);
   };
 
   const handleOpenChange = (newOpen: boolean) => {
@@ -89,9 +89,6 @@ const TimerStartDialog = ({
     <CustomDialog open={open} onOpenChange={handleOpenChange}>
       <CustomDialog.Content className="sm:max-w-lg">
         <CustomDialog.Header>
-          {/* <CustomDialog.Title className="typography-title-m text-left text-4xl font-bold text-gray-300">
-            오늘의 목표
-          </CustomDialog.Title> */}
           <input
             placeholder="오늘의 목표를 입력해 주세요"
             value={todayGoal}
@@ -116,15 +113,19 @@ const TimerStartDialog = ({
                     maxLength={30}
                     className="h-14"
                   />
-                  <span
+                  <button
+                    type="button"
                     onClick={handleAddTask}
                     className={cn(
-                      "typography-body-small-m absolute right-6 cursor-pointer",
-                      !todayGoal.trim() ? "text-gray-400" : "text-primary-0",
+                      "typography-body-small-m absolute right-6 cursor-pointer border-none bg-transparent",
+                      !newTaskContent.trim()
+                        ? "text-gray-400"
+                        : "text-primary-0",
                     )}
+                    disabled={!newTaskContent.trim()}
                   >
                     추가
-                  </span>
+                  </button>
                 </div>
                 <TextField.HelperText variant="error">
                   {todayGoal.trim().length > 30
@@ -160,7 +161,7 @@ const TimerStartDialog = ({
             variant="primary"
             label={isLoading ? "시작 중..." : "타이머 시작하기"}
             onClick={handleStart}
-            disabled={tasks.length === 0}
+            disabled={!todayGoal.trim() || tasks.length === 0}
           />
         </CustomDialog.Footer>
       </CustomDialog.Content>
