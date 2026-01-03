@@ -93,7 +93,9 @@ const TimerStartDialog = ({
             placeholder="오늘의 목표를 입력해 주세요"
             value={todayGoal}
             onChange={(e) => setTodayGoal(e.target.value)}
+            minLength={1}
             maxLength={30}
+            required
             className="typography-title-m text-left text-4xl font-bold text-gray-300"
           />
           {todayGoal.trim().length > 30 && (
