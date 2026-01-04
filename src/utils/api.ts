@@ -19,15 +19,26 @@ apiClient.interceptors.request.use((config) => {
 });
 
 let isRefreshing = false;
-let refreshSubscribers: ((token: string) => void)[] = [];
+let refreshSubscribers: {
+  resolve: (token: string) => void;
+  reject: (error: unknown) => void;
+}[] = [];
 
 const onRefreshed = (token: string) => {
-  refreshSubscribers.forEach((callback) => callback(token));
+  refreshSubscribers.forEach((subscriber) => subscriber.resolve(token));
   refreshSubscribers = [];
 };
 
-const addRefreshSubscriber = (callback: (token: string) => void) => {
-  refreshSubscribers.push(callback);
+const onRefreshFailed = (error: unknown) => {
+  refreshSubscribers.forEach((subscriber) => subscriber.reject(error));
+  refreshSubscribers = [];
+};
+
+const addRefreshSubscriber = (
+  resolve: (token: string) => void,
+  reject: (error: unknown) => void,
+) => {
+  refreshSubscribers.push({ resolve, reject });
 };
 
 apiClient.interceptors.response.use(
@@ -37,11 +48,16 @@ apiClient.interceptors.response.use(
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
-        return new Promise((resolve) => {
-          addRefreshSubscriber((token) => {
-            originalRequest.headers.Authorization = `Bearer ${token}`;
-            resolve(apiClient(originalRequest));
-          });
+        return new Promise((resolve, reject) => {
+          addRefreshSubscriber(
+            (token) => {
+              originalRequest.headers.Authorization = `Bearer ${token}`;
+              resolve(apiClient(originalRequest));
+            },
+            (err) => {
+              reject(err);
+            },
+          );
         });
       }
 
@@ -66,7 +82,8 @@ apiClient.interceptors.response.use(
 
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return apiClient(originalRequest);
-      } catch {
+      } catch (refreshError) {
+        onRefreshFailed(refreshError);
         tokenStorage.clearTokens();
         window.location.href = "/signin";
         return Promise.reject(error);
