@@ -18,27 +18,21 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
-let isRefreshing = false;
-let refreshSubscribers: {
-  resolve: (token: string) => void;
-  reject: (error: unknown) => void;
-}[] = [];
+let refreshPromise: Promise<string> | null = null;
 
-const onRefreshed = (token: string) => {
-  refreshSubscribers.forEach((subscriber) => subscriber.resolve(token));
-  refreshSubscribers = [];
-};
+const refreshAccessToken = async (): Promise<string> => {
+  const refreshToken = tokenStorage.getRefreshToken();
+  if (!refreshToken) {
+    throw new Error("No refresh token");
+  }
 
-const onRefreshFailed = (error: unknown) => {
-  refreshSubscribers.forEach((subscriber) => subscriber.reject(error));
-  refreshSubscribers = [];
-};
+  const res = await axios.post(`${BASE_URL}/api/auth/refresh`, {
+    refreshToken,
+  });
 
-const addRefreshSubscriber = (
-  resolve: (token: string) => void,
-  reject: (error: unknown) => void,
-) => {
-  refreshSubscribers.push({ resolve, reject });
+  const newAccessToken = res.data.accessToken;
+  tokenStorage.setAccessToken(newAccessToken);
+  return newAccessToken;
 };
 
 apiClient.interceptors.response.use(
@@ -47,48 +41,22 @@ apiClient.interceptors.response.use(
     const originalRequest = error.config;
 
     if (error.response?.status === 401 && !originalRequest._retry) {
-      if (isRefreshing) {
-        return new Promise((resolve, reject) => {
-          addRefreshSubscriber(
-            (token) => {
-              originalRequest.headers.Authorization = `Bearer ${token}`;
-              resolve(apiClient(originalRequest));
-            },
-            (err) => {
-              reject(err);
-            },
-          );
-        });
-      }
-
       originalRequest._retry = true;
-      isRefreshing = true;
-
-      const refreshToken = tokenStorage.getRefreshToken();
-      if (!refreshToken) {
-        tokenStorage.clearTokens();
-        window.location.href = "/signin";
-        return Promise.reject(error);
-      }
 
       try {
-        const res = await axios.post(`${BASE_URL}/api/auth/refresh`, {
-          refreshToken,
-        });
+        if (!refreshPromise) {
+          refreshPromise = refreshAccessToken().finally(() => {
+            refreshPromise = null;
+          });
+        }
 
-        const newAccessToken = res.data.accessToken;
-        tokenStorage.setAccessToken(newAccessToken);
-        onRefreshed(newAccessToken);
-
+        const newAccessToken = await refreshPromise;
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return apiClient(originalRequest);
-      } catch (refreshError) {
-        onRefreshFailed(refreshError);
+      } catch {
         tokenStorage.clearTokens();
         window.location.href = "/signin";
         return Promise.reject(error);
-      } finally {
-        isRefreshing = false;
       }
     }
 
