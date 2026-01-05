@@ -6,6 +6,7 @@ import type {
   GetActiveTimerResponse,
   GetStudyLogDetailResponse,
   UpdateTimerResponse,
+  DeleteTimerResponse,
 } from "@/types/types";
 
 export const timerService = {
@@ -62,6 +63,13 @@ export const timerService = {
           },
         ],
       },
+    );
+    return response.data;
+  },
+
+  deleteTimer: async (timerId: string): Promise<DeleteTimerResponse> => {
+    const response = await apiClient.delete<DeleteTimerResponse>(
+      `/api/timers/${timerId}`,
     );
     return response.data;
   },
