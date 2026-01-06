@@ -32,6 +32,7 @@ interface UseTimerReturn {
   startTimer: (goal: string, taskContents: string[]) => Promise<void>;
   pauseTimer: () => Promise<void>;
   resumeTimer: () => void;
+  resetTimer: () => Promise<void>;
   clearError: () => void;
 }
 
@@ -192,6 +193,35 @@ export const useTimer = (): UseTimerReturn => {
     }
   }, [clock, polling, state.timerId, state.elapsedSeconds]);
 
+  const resetTimer = useCallback(async () => {
+    const currentTimerId = state.timerId;
+    const previousState = state;
+
+    clock.stop();
+    polling.stop();
+
+    if (currentTimerId) {
+      try {
+        await timerService.deleteTimer(currentTimerId);
+      } catch {
+        showError({
+          title: "타이머 초기화 실패",
+          description: "서버에서 타이머를 삭제하지 못했습니다.",
+        });
+        if (previousState.status === "in-progress") {
+          clock.start(
+            previousState.startTime as string,
+            previousState.elapsedSeconds,
+          );
+          polling.start(currentTimerId);
+        }
+        throw new Error("Failed to delete timer");
+      }
+    }
+
+    setState(INITIAL_TIMER_STATE);
+  }, [clock, polling, state, showError]);
+
   const hours = Math.floor(state.elapsedSeconds / 3600);
   const minutes = Math.floor((state.elapsedSeconds % 3600) / 60);
   const seconds = state.elapsedSeconds % 60;
@@ -211,6 +241,7 @@ export const useTimer = (): UseTimerReturn => {
     startTimer,
     pauseTimer,
     resumeTimer,
+    resetTimer,
     clearError,
   };
 };

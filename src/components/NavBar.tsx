@@ -72,7 +72,7 @@ const NavBar = () => {
           랭킹
         </button>
       </div>
-      <div className="flex items-center gap-9">
+      <div className="flex items-center gap-3">
         {isLoggedIn ? (
           <>
             <DropdownMenu>
@@ -98,7 +98,9 @@ const NavBar = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <span>{nickName}</span>
+            <span className="typography-body-b text-secondary-indigo">
+              {nickName}
+            </span>
           </>
         ) : (
           <>

@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar";
 import Timer from "./component/Timer/Timer";
 import TimerAction from "./components/Timer/TimerAction";
 import TimerStartDialog from "./components/Timer/TimerStartDialog";
+import TimerResetDialog from "./components/Timer/TimerResetDialog";
 import { useTimer } from "./hooks/useTimer";
 import { useErrorModal } from "./contexts/ErrorModalContext";
 
 function App() {
   const { showError } = useErrorModal();
   const [showStartDialog, setShowStartDialog] = useState(false);
+  const [showResetDialog, setShowResetDialog] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
   const {
     status,
     todayGoal,
@@ -21,12 +24,45 @@ function App() {
     startTimer,
     pauseTimer,
     resumeTimer,
+    resetTimer,
     clearError,
   } = useTimer();
 
   const handleStartClick = () => {
     setShowStartDialog(true);
   };
+
+  const handleResetClick = () => {
+    setShowResetDialog(true);
+  };
+
+  const handleResetConfirm = async () => {
+    setIsResetting(true);
+    try {
+      await resetTimer();
+    } catch {
+      // 에러는 useTimer 훅 내부에서 처리됨
+    } finally {
+      setIsResetting(false);
+      setShowResetDialog(false);
+    }
+  };
+
+  const handleBeforeUnload = useCallback(
+    (e: BeforeUnloadEvent) => {
+      if (status === "in-progress" || status === "paused") {
+        e.preventDefault();
+      }
+    },
+    [status],
+  );
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [handleBeforeUnload]);
 
   const handleStartTimer = async (todayGoal: string, tasks: string[]) => {
     try {
@@ -63,6 +99,7 @@ function App() {
           onStart={handleStartClick}
           onPause={pauseTimer}
           onResume={resumeTimer}
+          onResetClick={handleResetClick}
         />
       </main>
 
@@ -71,6 +108,13 @@ function App() {
         onOpenChange={setShowStartDialog}
         onStart={handleStartTimer}
         isLoading={isLoading}
+      />
+
+      <TimerResetDialog
+        open={showResetDialog}
+        onOpenChange={setShowResetDialog}
+        onConfirm={handleResetConfirm}
+        isLoading={isResetting}
       />
     </div>
   );
