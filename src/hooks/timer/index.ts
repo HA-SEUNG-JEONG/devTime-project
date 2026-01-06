@@ -213,14 +213,14 @@ export const useTimer = (): UseTimerReturn => {
             previousState.startTime as string,
             previousState.elapsedSeconds,
           );
-          setState((prev) => ({ ...prev, status: "ready" }));
+          polling.start(currentTimerId);
         }
         throw new Error("Failed to delete timer");
       }
     }
 
     setState(INITIAL_TIMER_STATE);
-  }, [clock, polling, state.timerId, showError]);
+  }, [clock, polling, state, showError]);
 
   const hours = Math.floor(state.elapsedSeconds / 3600);
   const minutes = Math.floor((state.elapsedSeconds % 3600) / 60);
