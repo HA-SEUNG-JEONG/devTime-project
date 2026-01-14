@@ -3,12 +3,13 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { BrowserRouter, Route, Routes } from "react-router";
+import { AuthProvider } from "./contexts/AuthContext.tsx";
+import { ErrorModalProvider } from "./contexts/ErrorModalContext.tsx";
+import { GuestRoute, ProtectedRoute } from "./ProtectedRoute.tsx";
 import SignUp from "./page/User/SignUp.tsx";
 import SignIn from "./page/User/SignIn.tsx";
 import ProfileSetup from "./page/User/ProfileSetup.tsx";
-import { GuestRoute, ProtectedRoute } from "./ProtectedRoute.tsx";
-import { AuthProvider } from "./contexts/AuthContext.tsx";
-import { ErrorModalProvider } from "./contexts/ErrorModalContext.tsx";
+import Ranking from "./page/Ranking/Ranking.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -38,6 +39,14 @@ createRoot(document.getElementById("root")!).render(
               element={
                 <ProtectedRoute>
                   <ProfileSetup />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/ranking"
+              element={
+                <ProtectedRoute>
+                  <Ranking />
                 </ProtectedRoute>
               }
             />

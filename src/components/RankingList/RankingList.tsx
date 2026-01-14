@@ -1,28 +1,36 @@
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import type { RankingEntry, Purpose, CustomPurpose } from "@/types/types";
 
 interface RankingCardProps {
-  rank: number;
-  username: string;
-  subtitle: string;
-  stats: {
-    totalHours: number;
-    dailyAverage: number;
-    experience: string;
-  };
-  avatarUrl?: string;
-  items?: string[];
+  entry: RankingEntry;
 }
 
-const RankingList = ({
-  rank,
-  username,
-  subtitle,
-  avatarUrl,
-  stats,
-  items = ["Item", "Item", "Item", "Item", "Item"],
-}: RankingCardProps) => {
+const formatStudyTime = (seconds: number): string => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+
+  if (hours === 0) {
+    return `${minutes}분`;
+  }
+  if (minutes === 0) {
+    return `${hours}시간`;
+  }
+  return `${hours}시간 ${minutes}분`;
+};
+
+const getPurposeText = (purpose: Purpose): string => {
+  if (typeof purpose === "string") {
+    return purpose;
+  }
+  return (purpose as CustomPurpose).detail;
+};
+
+const RankingList = ({ entry }: RankingCardProps) => {
+  const { rank, nickname, totalStudyTime, averageStudyTime, profile } = entry;
+  const techStacks = profile.techStacks.slice(0, 5);
+
   const getRankBadgeColor = (rank: number) => {
     if (rank === 1) return "bg-primary-0 text-white";
     if (rank <= 10) return "bg-primary-10 text-white";
@@ -42,7 +50,7 @@ const RankingList = ({
             {rank.toLocaleString("ko-KR")}위
           </div>
           <Avatar className="h-20 w-20 rounded-full">
-            <AvatarImage src={avatarUrl} alt={username} />
+            <AvatarImage src={profile.profileImage ?? undefined} alt={nickname} />
             <AvatarFallback className="bg-[#D5DBEC]">
               <svg
                 className="text-muted-foreground h-16 w-16"
@@ -60,45 +68,49 @@ const RankingList = ({
         {/* Content */}
         <div className="flex-1">
           <h3 className="text-foreground mb-1 text-2xl font-bold">
-            {username}
+            {nickname}
           </h3>
-          <p className="mb-4 text-base text-[#4F6EF7]">{subtitle}</p>
+          <p className="mb-4 text-base text-[#4F6EF7]">
+            {getPurposeText(profile.purpose)}
+          </p>
 
           {/* Stats */}
           <div className="text-muted-foreground mb-4 flex gap-6 text-sm">
             <span>
               누적{" "}
               <span className="text-foreground font-bold">
-                {stats.totalHours}시간
+                {formatStudyTime(totalStudyTime)}
               </span>
             </span>
             <span>
               일 평균{" "}
               <span className="text-foreground font-bold">
-                {stats.dailyAverage}시간
+                {formatStudyTime(averageStudyTime)}
               </span>
             </span>
             <span>
               경력{" "}
               <span className="text-foreground font-bold">
-                {stats.experience}
+                {profile.career}
               </span>
             </span>
           </div>
 
-          {/* Items */}
-          <div className="flex flex-wrap gap-2">
-            {items.map((item, index) => (
-              <Button
-                key={index}
-                variant="secondary"
-                size="sm"
-                className="bg-muted hover:bg-muted/80 text-muted-foreground rounded-md px-4 py-2"
-              >
-                {item}
-              </Button>
-            ))}
-          </div>
+          {/* Tech Stacks */}
+          {techStacks.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {techStacks.map((stack) => (
+                <Button
+                  key={stack.id}
+                  variant="secondary"
+                  size="sm"
+                  className="bg-muted hover:bg-muted/80 text-muted-foreground cursor-default rounded-md px-4 py-2"
+                >
+                  {stack.name}
+                </Button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </Card>
