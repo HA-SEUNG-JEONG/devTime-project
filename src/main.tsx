@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import SignUp from "./page/User/SignUp.tsx";
 import SignIn from "./page/User/SignIn.tsx";
 import ProfileSetup from "./page/User/ProfileSetup.tsx";
+import Dashboard from "./page/Dashboard/Dashboard.tsx";
 import { GuestRoute, ProtectedRoute } from "./ProtectedRoute.tsx";
 import { AuthProvider } from "./contexts/AuthContext.tsx";
 import { ErrorModalProvider } from "./contexts/ErrorModalContext.tsx";
@@ -38,6 +39,14 @@ createRoot(document.getElementById("root")!).render(
               element={
                 <ProtectedRoute>
                   <ProfileSetup />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
                 </ProtectedRoute>
               }
             />
