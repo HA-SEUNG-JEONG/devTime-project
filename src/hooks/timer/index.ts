@@ -71,10 +71,7 @@ const extractErrorFromAxios = (err: unknown): TimerError => {
 };
 
 const normalizeSeconds = (value: number): number => {
-  if (value === null || value === undefined || Number.isNaN(value)) {
-    return 0;
-  }
-  if (value < 0) {
+  if (!Number.isFinite(value) || value < 0) {
     return 0;
   }
   return Math.floor(value);
@@ -272,6 +269,7 @@ export const useTimer = (): UseTimerReturn => {
       }
 
       const elapsedSeconds = clock.getElapsedSeconds();
+      const previousStatus = state.status;
 
       setIsLoading(true);
       clock.stop();
@@ -300,12 +298,17 @@ export const useTimer = (): UseTimerReturn => {
           title: "타이머 종료 실패",
           description: "서버에서 타이머를 종료하지 못했습니다.",
         });
+        if (previousStatus === "in-progress") {
+          clock.start(new Date().toISOString(), elapsedSeconds);
+          polling.start(currentTimerId);
+        }
+        setState((prev) => ({ ...prev, status: previousStatus }));
         throw new Error("Failed to stop timer");
       } finally {
         setIsLoading(false);
       }
     },
-    [state.timerId, clock, polling, showError],
+    [state.timerId, state.status, clock, polling, showError],
   );
 
   const normalizedElapsed = normalizeSeconds(state.elapsedSeconds);

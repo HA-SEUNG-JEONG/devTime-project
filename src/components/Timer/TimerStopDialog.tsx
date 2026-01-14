@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { CustomDialog } from "@/components/Dialog/CustomDialog";
 import { CustomButton } from "@/components/Button/CustomButton";
 import TaskItem, { type Task } from "./TaskItem";
@@ -32,6 +32,9 @@ const formatElapsedTime = (seconds: number): string => {
   return parts.join(" ");
 };
 
+const generateId = () =>
+  `task-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+
 const TimerStopDialog = ({
   open,
   onOpenChange,
@@ -45,17 +48,16 @@ const TimerStopDialog = ({
   const [newTaskContent, setNewTaskContent] = useState("");
   const [review, setReview] = useState("");
   const [isStopping, setIsStopping] = useState(false);
+  const prevOpenRef = useRef(open);
 
   useEffect(() => {
-    if (open) {
+    if (open && !prevOpenRef.current) {
       setTasks(initialTasks);
       setNewTaskContent("");
       setReview("");
     }
+    prevOpenRef.current = open;
   }, [open, initialTasks]);
-
-  const generateId = () =>
-    `task-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
 
   const handleAddTask = useCallback(() => {
     const trimmed = newTaskContent.trim();

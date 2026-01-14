@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { CustomDialog } from "@/components/Dialog/CustomDialog";
 import { CustomButton } from "@/components/Button/CustomButton";
 import TaskItem, { type Task } from "./TaskItem";
@@ -14,6 +14,9 @@ interface TimerTodoDialogProps {
   isLoading?: boolean;
 }
 
+const generateId = () =>
+  `task-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+
 const TimerTodoDialog = ({
   open,
   onOpenChange,
@@ -25,16 +28,15 @@ const TimerTodoDialog = ({
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [newTaskContent, setNewTaskContent] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  const prevOpenRef = useRef(open);
 
   useEffect(() => {
-    if (open) {
+    if (open && !prevOpenRef.current) {
       setTasks(initialTasks);
       setNewTaskContent("");
     }
+    prevOpenRef.current = open;
   }, [open, initialTasks]);
-
-  const generateId = () =>
-    `task-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
 
   const handleAddTask = useCallback(() => {
     const trimmed = newTaskContent.trim();
