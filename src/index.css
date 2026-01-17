@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+@theme {
+  --color-heatmap-0: #E8EDF8;
+  --color-heatmap-1: #B8CAFF;
+  --color-heatmap-2: #87A6FF;
+  --color-heatmap-3: #4C79FF;
+  --color-heatmap-4: #1E50E5;
+  --color-heatmap-5: #023E99;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
